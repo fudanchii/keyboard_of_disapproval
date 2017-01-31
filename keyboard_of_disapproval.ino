@@ -34,12 +34,10 @@ void regKey(char key) {
 
 void selectRow(int pin) {
   PORTA &= ~(1 << pin);
-  //digitalWrite(pin, LOW);
 }
 
 void unselectRow(int pin) {
   PORTA |= 1 << pin;
-  //digitalWrite(pin, HIGH);
 }
 
 void scanKey() {
