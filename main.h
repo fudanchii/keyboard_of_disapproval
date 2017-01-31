@@ -100,7 +100,7 @@ const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] 
 #define KBOD_MAT_RL 2
 #define KBOD_KRO    6
 
-const int KBOD_MAT_C[] {PB0, PB1, PB2};
+const int KBOD_MAT_C[] {0, 5, 2};
 const int KBOD_MAT_R[] {PA0, PA1};
 
 #ifdef __cplusplus
