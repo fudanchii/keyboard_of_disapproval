@@ -1,9 +1,12 @@
-#include <avr/delay.h>
 #include <avr/io.h>
+
+#define F_CPU 16000000UL
+#include <util/delay.h>
 
 #include <usbdrv.h>
 #include "main.h"
 #include "keymap.h"
+#include "bits.h"
 
 int   keyRegistered = 0;
 uchar reportBuffer[7] = "";
@@ -17,14 +20,13 @@ uchar usbFunctionSetup(uchar data[8]) {
 void pinSetup() {
   // Set port B pin 0, 2 and port A pin 7 as input,
   // and enable pull up resistor
-  PORTB |= (1 << PB0) | (1 << PB2);
-  DDRB  &= ~(1 << DDB0);
-  DDRB  &= ~(1 << DDB2);
+  bitset2(PORTB, PB0, PB2);
+  bitclr2(DDRB, DDB0, DDB2);
 
   // Set port A pin 0, 1 as output, and initially driven high
-  PORTA |= (1 << PA0) | (1 << PA1) | (1 << PA7);
-  DDRA  &= ~(1 << DDA7);
-  DDRA  |= (1 << DDA0) | (1 << DDA1);
+  bitset3(PORTA, PA0, PA1, PA7);
+  bitclr1(DDRA, DDA7);
+  bitset2(DDRA, DDA0, DDA1);
 }
 
 void regKey(char key) {
@@ -32,28 +34,21 @@ void regKey(char key) {
   reportBuffer[keyRegistered] = key;
 }
 
-void selectRow(int pin) {
-  PORTA &= ~(1 << pin);
-}
-
-void unselectRow(int pin) {
-  PORTA |= 1 << pin;
-}
 
 void scanKey() {
   for (int i = 0; i < KBOD_MAT_RL; i++) {
-    selectRow(KBOD_MAT_R[i]);
+    select_row(KBOD_MAT_R[i]);
     for (int j = 0; j < KBOD_MAT_CL; j++) {
-      int pdata = digitalRead(KBOD_MAT_C[j]);
-      if (pdata == LOW) {
+      int pdata = KBOD_C_PORT[j];
+      if (bit_is_clear(pdata, KBOD_MAT_C[j])) {
         regKey(KEYMAP[i][j]);
         if (keyRegistered == KBOD_KRO) {
-          unselectRow(KBOD_MAT_R[i]);
+          unselect_row(KBOD_MAT_R[i]);
           return;
         }
       }
     }
-    unselectRow(KBOD_MAT_R[i]);
+    unselect_row(KBOD_MAT_R[i]);
   }
 }
 

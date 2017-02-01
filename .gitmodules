@@ -1,0 +1,6 @@
+[submodule "vendor/v-usb"]
+	path = vendor/v-usb
+	url = https://github.com/obdev/v-usb
+[submodule "vendor/lufa"]
+	path = vendor/lufa
+	url = https://github.com/abcminiuser/lufa

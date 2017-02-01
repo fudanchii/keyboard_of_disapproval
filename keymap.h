@@ -1,3 +1,5 @@
+#ifndef _H_KEYMAP
+#define _H_KEYMAP
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,4 +12,6 @@ const char KEYMAP[KBOD_MAT_RL][KBOD_MAT_CL] = {
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
