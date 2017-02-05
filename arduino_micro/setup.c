@@ -194,39 +194,28 @@ void idle_USBTask()
     receive_report();
 }
 
+/**
+ * send_report responsible in sending key event report on idle,
+ * this function will also send report if different keys pressed
+ * while idle. */
 void send_report()
 {
     static KBOD_Report_t prevReport;
     bool                 sendReport = false;
 
-    /* Check if the idle period is set and has elapsed */
-    if (IdleCount && (!(IdleMSRemaining)))
-    {
-        /* Reset the idle time remaining counter */
-        IdleMSRemaining = IdleCount;
-
-        /* Idle period is set and has elapsed, must send a report to the host */
-        SendReport = true;
+    if (idleCount && (!(idleMSRemaining))) {
+        idleMSRemaining = idleCount;
+        sendReport = true;
     }
-    else
-    {
-        /* Check to see if the report data has changed - if so a report MUST be sent */
+    else {
         sendReport = (memcmp(&prevReport, &cReport, sizeof(KBOD_Report_t)) != 0);
     }
 
-    /* Select the Keyboard Report Endpoint */
     Endpoint_SelectEndpoint(KEYBOARD_IN_EPADDR);
 
-    /* Check if Keyboard Endpoint Ready for Read/Write and if we should send a new report */
-    if (Endpoint_IsReadWriteAllowed() && sendReport)
-    {
-        /* Save the current report data for later comparison to check for changes */
+    if (Endpoint_IsReadWriteAllowed() && sendReport) {
         prevReport = cReport;
-
-        /* Write Keyboard Report Data */
         Endpoint_Write_Stream_LE(&cReport, sizeof(cReport), NULL);
-
-        /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
     }
 }
