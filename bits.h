@@ -18,11 +18,6 @@
 #define bitset5(sfr, a, b, c, d, e)          sfr |= _BV(a) | _BV(b) | _BV(c) | _BV(d) | _BV(e)
 #define bitset6(sfr, a, b, c, d, e, f)       sfr |= _BV(a) | _BV(b) | _BV(c) | _BV(d) | _BV(e) | _BV(f)
 #define bitset7(sfr, a, b, c, d, e, f, g)    sfr |= _BV(a) | _BV(b) | _BV(c) | _BV(d) | _BV(e) | _BV(f) | _BV(g)
-#define bitset7(sfr, a, b, c, d, e, f, g, h) sfr |= _BV(a) | _BV(b) | _BV(c) | _BV(d) | _BV(e) | _BV(f) | _BV(g) | _BV(h)
-
-
-#define select_row(pin)    bitclr1(PORTA, pin)
-
-#define unselect_row(pin)  bitset1(PORTA, pin)
+#define bitset8(sfr, a, b, c, d, e, f, g, h) sfr |= _BV(a) | _BV(b) | _BV(c) | _BV(d) | _BV(e) | _BV(f) | _BV(g) | _BV(h)
 
 #endif
