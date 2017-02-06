@@ -35,7 +35,7 @@
  *  computer-readable structures which the host requests upon device enumeration, to determine
  *  the device's capabilities and functions.
  */
-
+#include <defs.h>
 #include "descriptors.h"
 
 /** HID class report descriptor. This is a special descriptor constructed with values from the

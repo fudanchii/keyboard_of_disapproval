@@ -22,6 +22,16 @@ static uint16_t idleCount = 500;
 } while(0);
 
 
+const uint8_t PROGMEM KBOD_MAT_C[KBOD_MAT_CL] = { PD0, PD1, PF0, PF1, PF4, PF5, PF6, PF7 };
+const uint8_t PROGMEM KBOD_MAT_R[KBOD_MAT_RL] = { PC6, PD7, PE6, PB4, PB5, PB6, PB7, PD6 };
+
+                                                 // PORTC, PORTD, PORTE, PORTB, PORTB, PORTB, PORTB, PORTD
+const uint8_t PROGMEM KBOD_PORTS_R[KBOD_MAT_RL] = { 0x08,  0x0B,  0x0E,  0x05,  0x05,  0x05,  0x05,  0x08 };
+
+                                               // PIND, PIND, PINF, PINF, PINF, PINF, PINF, PINF 
+const uint8_t PROGMEM KBOD_PIN_C[KBOD_MAT_CL] = { 0x09, 0x09, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F };
+
+
 void kbod_setup()
 {
     // Drive high | enable pull up resistor
@@ -37,7 +47,7 @@ void kbod_setup()
 
     // set as output
     bitset4(DDRB, DDB4, DDB5, DDB6, DDB7);
-    bitset2(DDRC, DDC6);
+    bitset1(DDRC, DDC6);
     bitset2(DDRD, DDD6, DDD7);
     bitset1(DDRE, DDE6);
 

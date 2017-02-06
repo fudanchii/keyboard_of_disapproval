@@ -1,6 +1,8 @@
 #ifndef _H_DEFS
 #define _H_DEFS
 
+#include <LUFA/Common/Common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -111,16 +113,18 @@ extern "C" {
 #define KEY_ADOWN 81
 #define KEY_AUP 82
 
+#define KEY_MENU 101
+
 #define KBOD_HWMOD_FN 0xFF
 
 #define KBOD_NKRO 10
 
-#define is_modifier(r, c) MOD_MASKED(KEYMAP[r][c])
-#define is_hwmod_fn(r, c) (KEYMAP[r][c] == KBOD_HWMOD_FN)
-#define is_active(c)      bit_is_clear(KBOD_PIN_C[c], KBOD_MAT_C[c])
+#define is_modifier(r, c) MOD_MASKED(KEYMAP_BASE[r][c])
+#define is_hwmod_fn(r, c) (KEYMAP_BASE[r][c] == KBOD_HWMOD_FN)
+#define is_active(c)      (!(_SFR_IO8(KBOD_PIN_C[c]) & _BV(KBOD_MAT_C[c])))
 
-#define select_row(idx)   bitclr1(KBOD_PORTS_R[idx], KBOD_MAT_R[idx])
-#define unselect_row(idx) bitset1(KBOD_PORTS_R[idx], KBOD_MAT_R[idx])
+#define select_row(idx)   bitclr1(_SFR_IO8(KBOD_PORTS_R[idx]), KBOD_MAT_R[idx])
+#define unselect_row(idx) bitset1(_SFR_IO8(KBOD_PORTS_R[idx]), KBOD_MAT_R[idx])
 
 typedef struct {
     uint8_t modifier;

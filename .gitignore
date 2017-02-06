@@ -28,6 +28,13 @@
 *.out
 *.app
 *.elf
+*.bin
+*.eep
+*.hex
+*.lss
+*.map
+*.sym
+
 
 # =========================
 # Operating System Files

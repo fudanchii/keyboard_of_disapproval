@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "defs.h"
 #include "bits.h"
 
@@ -10,25 +12,25 @@
 void kbod_matrix_scan()
 {
     int kro_full = 0;
-    for (int i = 0; i < KBOD_MAT_RL; i++)
+    for (int row = 0; row < KBOD_MAT_RL; row++)
     {
-        select_row(i);
-        for (col = 0; col < KBOD_MAT_CL; col++)
+        select_row(row);
+        for (int col = 0; col < KBOD_MAT_CL; col++)
         {
-            if (!is_active(row, col)) continue;
+            if (!is_active(col)) continue;
 
             // TODO: handle hwmod FN key
             if (is_hwmod_fn(row, col)) continue;
 
             if (is_modifier(row, col)) {
-                kbod_assign_modifier(MOD_UNMASK(KEYMAP[row][col]));
+                kbod_assign_modifier(MOD_UNMASK(KEYMAP_BASE[row][col]));
                 continue;
             }
 
-            kro_full = kbod_assign_key(KEYMAP[row][col]);
+            kro_full = kbod_assign_key(KEYMAP_BASE[row][col]);
             if (kro_full) break;
         }
-        unselect_row(i);
+        unselect_row(row);
         if (kro_full) { return; }
     }
 }
