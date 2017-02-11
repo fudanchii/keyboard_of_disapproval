@@ -23,6 +23,10 @@ LUFA_PATH    = ./vendor/lufa/LUFA
 CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/ -DBOARD_$(BOARD) -I./
 LD_FLAGS     =
 
+AVRDUDE_PROGRAMMER = avr109
+AVRDUDE_PORT       = COM10
+AVRDUDE_FLAGS      = -C H:\apps\arduino-1.8.1\hardware\tools\avr\etc\avrdude.conf
+
 # Default target
 all:
 

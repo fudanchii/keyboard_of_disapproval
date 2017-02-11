@@ -121,7 +121,7 @@ extern "C" {
 
 #define is_modifier(r, c) MOD_MASKED(KEYMAP_BASE[r][c])
 #define is_hwmod_fn(r, c) (KEYMAP_BASE[r][c] == KBOD_HWMOD_FN)
-#define is_active(c)      (!(_SFR_IO8(KBOD_PIN_C[c]) & _BV(KBOD_MAT_C[c])))
+#define not_active(c)     (_SFR_IO8(KBOD_PIN_C[c]) & _BV(KBOD_MAT_C[c]))
 
 #define select_row(idx)   bitclr1(_SFR_IO8(KBOD_PORTS_R[idx]), KBOD_MAT_R[idx])
 #define unselect_row(idx) bitset1(_SFR_IO8(KBOD_PORTS_R[idx]), KBOD_MAT_R[idx])

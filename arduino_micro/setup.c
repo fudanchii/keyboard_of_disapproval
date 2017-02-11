@@ -22,21 +22,23 @@ static uint16_t idleCount = 500;
 } while(0);
 
 
-const uint8_t PROGMEM KBOD_MAT_C[KBOD_MAT_CL] = { PD0, PD1, PF0, PF1, PF4, PF5, PF6, PF7 };
-const uint8_t PROGMEM KBOD_MAT_R[KBOD_MAT_RL] = { PC6, PD7, PE6, PB4, PB5, PB6, PB7, PD6 };
+const uint8_t KBOD_MAT_R[KBOD_MAT_RL] = { PC6, PD7, PE6, PB4, PB5, PB6, PB7, PD6 };
+const uint8_t KBOD_MAT_C[KBOD_MAT_CL] = { PD0, PD1, PF0, PF1, PF4, PF5, PF6, PF7 };
 
-                                                 // PORTC, PORTD, PORTE, PORTB, PORTB, PORTB, PORTB, PORTD
-const uint8_t PROGMEM KBOD_PORTS_R[KBOD_MAT_RL] = { 0x08,  0x0B,  0x0E,  0x05,  0x05,  0x05,  0x05,  0x08 };
+                                         // PORTC, PORTD, PORTE, PORTB, PORTB, PORTB, PORTB, PORTD
+const uint8_t KBOD_PORTS_R[KBOD_MAT_RL] = { 0x08,  0x0B,  0x0E,  0x05,  0x05,  0x05,  0x05,  0x0B };
 
-                                               // PIND, PIND, PINF, PINF, PINF, PINF, PINF, PINF 
-const uint8_t PROGMEM KBOD_PIN_C[KBOD_MAT_CL] = { 0x09, 0x09, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F };
+                                       // PIND, PIND, PINF, PINF, PINF, PINF, PINF, PINF 
+const uint8_t KBOD_PIN_C[KBOD_MAT_CL] = { 0x09, 0x09, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F };
 
 
 void kbod_setup()
 {
+    USB_Init();
+
     // Drive high | enable pull up resistor
     bitset4(PORTB, PB4, PB5, PB6, PB7);
-    bitset1(PORTC, PC6);
+    bitset2(PORTC, PC6, PC7);
     bitset4(PORTD, PD0, PD1, PD6, PD7);
     bitset1(PORTE, PE6);
     bitset6(PORTF, PF0, PF1, PF4, PF5, PF6, PF7);
@@ -47,11 +49,9 @@ void kbod_setup()
 
     // set as output
     bitset4(DDRB, DDB4, DDB5, DDB6, DDB7);
-    bitset1(DDRC, DDC6);
+    bitset2(DDRC, DDC6, DDC7);
     bitset2(DDRD, DDD6, DDD7);
     bitset1(DDRE, DDE6);
-
-    USB_Init();
 }
 
 void kbod_cycle()
@@ -75,6 +75,12 @@ int kbod_assign_key(char key)
 void EVENT_USB_Device_Connect()
 {
     UsingReportProtocol = true;
+    for (int i = 0; i < 2; i++) {
+        PORTC ^= _BV(PC7);
+        _delay_ms(100);
+        PORTC ^= _BV(PC7);
+        _delay_ms(100);
+    }
 }
 
 void EVENT_USB_Device_Disconnect()

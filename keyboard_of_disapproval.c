@@ -15,9 +15,10 @@ void kbod_matrix_scan()
     for (int row = 0; row < KBOD_MAT_RL; row++)
     {
         select_row(row);
+        _delay_ms(3);
         for (int col = 0; col < KBOD_MAT_CL; col++)
         {
-            if (!is_active(col)) continue;
+            if (not_active(col)) continue;
 
             // TODO: handle hwmod FN key
             if (is_hwmod_fn(row, col)) continue;
@@ -52,5 +53,5 @@ int main()
     sei();
 
     // Keyboard event cycle
-    for (;;) kbod_cycle();
+    for (;;) { kbod_cycle(); }
 }
