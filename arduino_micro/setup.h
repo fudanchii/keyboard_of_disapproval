@@ -21,6 +21,8 @@ extern const uint8_t KBOD_MAT_R[KBOD_MAT_RL];
 extern const uint8_t KBOD_PORTS_R[KBOD_MAT_RL];
 extern const uint8_t KBOD_PIN_C[KBOD_MAT_CL];
 
+extern char (*keymap)[KBOD_MAT_RL][KBOD_MAT_RL];
+
 void EVENT_USB_Device_Connect(void);
 void EVENT_USB_Device_Disconnect(void);
 void EVENT_USB_Device_ConfigurationChanged(void);

@@ -12,6 +12,7 @@ extern "C" {
 #define KBOD_MAT_CL 8
 
 extern const char KEYMAP_BASE[KBOD_MAT_RL][KBOD_MAT_CL];
+extern const char KEYMAP_FN[KBOD_MAT_RL][KBOD_MAT_CL];
 
 #ifdef __cplusplus
 }

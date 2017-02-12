@@ -15,12 +15,18 @@ bool UsingReportProtocol = true;
 static uint16_t idleMSRemaining = 0;
 static uint16_t idleCount = 500;
 
-#define init_prescan() {                \
-    keyPressed = 0;                     \
-    cReport.modifier = 0;               \
-    memset(cReport.keys, 0, KBOD_NKRO); \
-} while(0);
+#define do_scan() {                             \
+    keyPressed = 0;                             \
+    memset(&cReport, 0, sizeof(KBOD_Report_t)); \
+    kbod_matrix_scan();                         \
+} while(0)
 
+#define blink_led(ms) for (int i = 0; i < 2; i++) { \
+    PORTC ^= _BV(PC7);                              \
+    _delay_ms(ms);                                  \
+    PORTC ^= _BV(PC7);                              \
+    _delay_ms(ms);                                  \
+}
 
 const uint8_t KBOD_MAT_R[KBOD_MAT_RL] = { PC6, PD7, PE6, PB4, PB5, PB6, PB7, PD6 };
 const uint8_t KBOD_MAT_C[KBOD_MAT_CL] = { PD0, PD1, PF0, PF1, PF4, PF5, PF6, PF7 };
@@ -56,31 +62,26 @@ void kbod_setup()
 
 void kbod_cycle()
 {
-    idle_USBTask();
     USB_USBTask();
+    idle_USBTask();
 }
 
 void kbod_assign_modifier(char mod)
 {
-    cReport.modifier |= mod;
+    cReport.modifier |= mod ? mod : KEY_GUI_RIGHT;
 }
 
 int kbod_assign_key(char key)
 {
-    if (keyPressed == KBOD_NKRO) return 1;
+    if (keyPressed == KBOD_NKRO) return keyPressed;
     cReport.keys[keyPressed++] = key;
-    return 0;
+    return keyPressed;
 }
 
 void EVENT_USB_Device_Connect()
 {
     UsingReportProtocol = true;
-    for (int i = 0; i < 2; i++) {
-        PORTC ^= _BV(PC7);
-        _delay_ms(100);
-        PORTC ^= _BV(PC7);
-        _delay_ms(100);
-    }
+    blink_led(100);
 }
 
 void EVENT_USB_Device_Disconnect()
@@ -116,8 +117,7 @@ void EVENT_USB_Device_ControlRequest(void)
             {
                 Endpoint_ClearSETUP();
 
-                init_prescan();
-                kbod_matrix_scan();
+                do_scan();
 
                 /* Write the report data to the control endpoint */
                 Endpoint_Write_Control_Stream_LE(&cReport, sizeof(cReport));
@@ -201,11 +201,12 @@ void EVENT_USB_Device_ControlRequest(void)
 
 void idle_USBTask()
 {
-    if (USB_DeviceState != DEVICE_STATE_Configured)
+    if (USB_DeviceState != DEVICE_STATE_Configured) {
+        blink_led(100);
         return;
+    }
 
-    init_prescan();
-    kbod_matrix_scan();
+    do_scan();
     send_report();
     receive_report();
 }

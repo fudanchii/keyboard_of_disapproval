@@ -11,7 +11,11 @@
 
 void kbod_matrix_scan()
 {
-    int kro_full = 0;
+    int kdetected = 0;
+    int kro = 0;
+    uint8_t kbuff[KBOD_NKRO+7];
+    char (*keymap)[KBOD_MAT_RL][KBOD_MAT_RL] = &KEYMAP_BASE;
+    memset(kbuff, sizeof(kbuff), 0);
     for (int row = 0; row < KBOD_MAT_RL; row++)
     {
         select_row(row);
@@ -20,19 +24,26 @@ void kbod_matrix_scan()
         {
             if (not_active(col)) continue;
 
-            // TODO: handle hwmod FN key
-            if (is_hwmod_fn(row, col)) continue;
-
-            if (is_modifier(row, col)) {
-                kbod_assign_modifier(MOD_UNMASK(KEYMAP_BASE[row][col]));
+            if (is_hwmod_fn(row, col)) {
+                keymap = &KEYMAP_FN;
                 continue;
             }
 
-            kro_full = kbod_assign_key(KEYMAP_BASE[row][col]);
-            if (kro_full) break;
+            kbuff[kdetected] = (row << 4 ) | (col & 0x0F);
+            kdetected++;
         }
         unselect_row(row);
-        if (kro_full) { return; }
+    }
+
+    for (int k = 0; k < kdetected; k++) {
+        uint8_t r = kbuff[k] >> 4;
+        uint8_t c = kbuff[k] & 0x0F;
+        if (is_modifier(r, c)) {
+            kbod_assign_modifier(MOD_UNMASK((*keymap)[r][c]));
+            continue;
+        }
+        kro = kbod_assign_key((*keymap)[r][c]);
+        if (kro == KBOD_NKRO) break;
     }
 }
 
@@ -53,5 +64,5 @@ int main()
     sei();
 
     // Keyboard event cycle
-    for (;;) { kbod_cycle(); }
+    for (;;) kbod_cycle();
 }
