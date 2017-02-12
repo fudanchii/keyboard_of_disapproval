@@ -13,13 +13,13 @@ and the controller is arduino micro clone from Robotdyn.
 Considering how much time, effort, and money poured on this, I don't think anyone will approve.  
 Also, naming is hard.
 
-## The build
+## The Build
 While the layout is totally GH60, this keyboard is _somewhat_ built from scratch. The switches are all hand-wired with 8x8 matrix, so it's only use 16 pins. Matrix layout [here](https://github.com/fudanchii/keyboard_of_disapproval/blob/master/arduino_micro/keymap.c). The firmware is written from scratch on top of [LUFA](https://github.com/abcminiuser/lufa) (all USB related code was adapted from LUFA keyboard demo though). 
  Currently there is only one base keymap, with `[Fn]` modifier to accomodate arrows, `[pageUp]`-`[PageDown]`, `[Esc]`, `[Home]`-`[End]`, and `[Insert]`. (See todo below)
 
 ## The Firmware
 Please change the makefile according to your environment setup, run `make` to build the firmware. Run `make avrdude` to flash the firmware.
-Previously I plan to build the keyboard on ATTiny167 based Digispark Pro, but it's in incomplete state as of current. Also this RobotDyn Micro clone is dirt-cheap!
+Previously I plan to build the keyboard on ATTiny167 based Digispark Pro, but it's in incomplete state as of current. Also this RobotDyn Arduino-Micro clone is dirt-cheap!
 
 ## Bill of Material
 Here is BOM (price in USD):
