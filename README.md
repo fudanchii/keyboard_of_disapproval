@@ -14,7 +14,7 @@ Considering how much time, effort, and money poured on this, I don't think anyon
 Also, naming is hard.
 
 ## The build
-While the layout is totally GH60, this keyboard is purely built from scratch. The switches are all hand-wired with 8x8 matrix, so it's only use 16 pins. Matrix layout [here](https://github.com/fudanchii/keyboard_of_disapproval/blob/master/arduino_micro/keymap.c). The firmware is written from scratch on top of [LUFA](https://github.com/abcminiuser/lufa) (all USB related code was adapted from LUFA keyboard demo though). 
+While the layout is totally GH60, this keyboard is _somewhat_ built from scratch. The switches are all hand-wired with 8x8 matrix, so it's only use 16 pins. Matrix layout [here](https://github.com/fudanchii/keyboard_of_disapproval/blob/master/arduino_micro/keymap.c). The firmware is written from scratch on top of [LUFA](https://github.com/abcminiuser/lufa) (all USB related code was adapted from LUFA keyboard demo though). 
  Currently there is only one base keymap, with `[Fn]` modifier to accomodate arrows, `[pageUp]`-`[PageDown]`, `[Esc]`, `[Home]`-`[End]`, and `[Insert]`. (See todo below)
 
 ## The Firmware
