@@ -19,7 +19,7 @@ While the layout is totally GH60, this keyboard is _somewhat_ built from scratch
 
 ## The Firmware
 Please change the makefile according to your environment setup, run `make` to build the firmware. Run `make avrdude` to flash the firmware.
-Previously I plan to build the keyboard on ATTiny167 based Digispark Pro, but it's in incomplete state as of current.
+Previously I plan to build the keyboard on ATTiny167 based Digispark Pro, but it's in incomplete state as of current. Also this RobotDyn Micro clone is dirt-cheap!
 
 ## Bill of Material
 Here is BOM (price in USD):
