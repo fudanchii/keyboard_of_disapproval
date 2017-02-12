@@ -5,7 +5,7 @@ but anyway, here it is:
 
 <img src="https://f4.fudanchii.net/shx/2017/02/IMG_20170212_224547.jpg"></img>
 
-In case anyone curious, it's built on scrap collected over the past 8 months, the plate is metal frame with 60% layout ([GH60](http://blog.komar.be/introducing-the-gh60-keyboard-project/)) from aliexpress,
+In case anyone curious, it's built on scrap collected since 2016 September, the plate is metal frame with 60% layout ([GH60](http://blog.komar.be/introducing-the-gh60-keyboard-project/)) from aliexpress,
 switches is gateron blue bought from Massdrop, the key caps is randomly bought from local gaming store, 
 and the controller is arduino micro clone from Robotdyn.
 
