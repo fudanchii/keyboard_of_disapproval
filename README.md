@@ -42,7 +42,7 @@ Arduino Micro (clone) | RobotDyn | 1 | $3.85 | $1.41 | [RobotyDyn](http://robotd
 - LEDs
 - More layers?
 - Special layer for input macro (shortcut to input some text)
-
+- Proper mounting/housing for the controller
 
 ## Legals
 
