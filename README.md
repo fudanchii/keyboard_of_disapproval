@@ -26,7 +26,7 @@ Here is BOM (price in USD):
 
 Name | Store | Qty | Price (total) | Shipping cost | Link
 --- | --- | --- | --- | --- | ---
-Metal Frame Plate GH-69 layout + stabilizer (unused) | KBDFans Store (AliExpress) | 1 | $22 | $13.39 | [AliExpress](https://www.aliexpress.com/item/Steel-plate-GH60-mechanical-keyboard-poker2-electro-coating-steel-plate-gaming-keyboard-FACEU-keyboard-metal-case/32722949125.html)
+Metal Frame Plate GH60 layout + stabilizer (unused) | KBDFans Store (AliExpress) | 1 | $22 | $13.39 | [AliExpress](https://www.aliexpress.com/item/Steel-plate-GH60-mechanical-keyboard-poker2-electro-coating-steel-plate-gaming-keyboard-FACEU-keyboard-metal-case/32722949125.html)
 Gateron Blue Switches | Massdrop | 120 pcs | $24.99 | $9.75 | [Massdrop](https://www.massdrop.com/buy/23991)
 Novelties keycaps | Massdrop | 6pcs | $19.98 | $6.50 | [Massdrop](https://www.massdrop.com/buy/25017)
 PBT OEM profile Keycaps | Local gaming store | 1 pack | $20 | - | -
