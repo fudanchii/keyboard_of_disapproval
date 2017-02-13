@@ -8,9 +8,6 @@ KBOD_Report_t cReport;
 int keyPressed = 0;
 bool UsingReportProtocol = true;
 
-static uint16_t idleMSRemaining = 0;
-static uint16_t idleCount = 500;
-
 #define do_scan() {                             \
     keyPressed = 0;                             \
     memset(&cReport, 0, sizeof(KBOD_Report_t)); \
@@ -99,8 +96,7 @@ void EVENT_USB_Device_ConfigurationChanged()
 
 void EVENT_USB_Device_StartOfFrame(void)
 {
-    if (idleMSRemaining)
-        idleMSRemaining--;
+
 }
 
 void EVENT_USB_Device_ControlRequest(void)
@@ -172,9 +168,6 @@ void EVENT_USB_Device_ControlRequest(void)
             {
                 Endpoint_ClearSETUP();
                 Endpoint_ClearStatusStage();
-
-                /* Get idle period in MSB, idleCount must be multiplied by 4 to get number of milliseconds */
-                idleCount = ((USB_ControlRequest.wValue & 0xFF00) >> 6);
             }
 
             break;
@@ -184,7 +177,7 @@ void EVENT_USB_Device_ControlRequest(void)
                 Endpoint_ClearSETUP();
 
                 /* Write the current idle duration to the host, must be divided by 4 before sent to host */
-                Endpoint_Write_8(idleCount >> 2);
+                Endpoint_Write_8(0);
 
                 Endpoint_ClearIN();
                 Endpoint_ClearStatusStage();
@@ -197,11 +190,6 @@ void EVENT_USB_Device_ControlRequest(void)
 
 void idle_USBTask()
 {
-    if (USB_DeviceState != DEVICE_STATE_Configured) {
-        blink_led(100);
-        return;
-    }
-
     do_scan();
     send_report();
     receive_report();
@@ -213,21 +201,9 @@ void idle_USBTask()
  * while idle. */
 void send_report()
 {
-    static KBOD_Report_t prevReport;
-    bool                 sendReport = false;
-
-    if (idleCount && (!(idleMSRemaining))) {
-        idleMSRemaining = idleCount;
-        sendReport = true;
-    }
-    else {
-        sendReport = (memcmp(&prevReport, &cReport, sizeof(KBOD_Report_t)) != 0);
-    }
-
     Endpoint_SelectEndpoint(KEYBOARD_IN_EPADDR);
 
-    if (Endpoint_IsReadWriteAllowed() && sendReport) {
-        prevReport = cReport;
+    if (Endpoint_IsReadWriteAllowed()) {
         Endpoint_Write_Stream_LE(&cReport, sizeof(cReport), NULL);
         Endpoint_ClearIN();
     }
