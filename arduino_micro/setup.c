@@ -3,11 +3,7 @@
 void send_report(void);
 void receive_report(void);
 
-KBOD_Report_t cReport = {
-    .modifier = 0,
-    .reserved = 0,
-    .keys =     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-};
+KBOD_Report_t cReport;
 
 int keyPressed = 0;
 bool UsingReportProtocol = true;

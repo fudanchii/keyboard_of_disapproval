@@ -14,7 +14,7 @@ void kbod_matrix_scan()
     int kdetected = 0;
     int kro = 0;
     uint8_t kbuff[KBOD_NKRO+7];
-    char (*keymap)[KBOD_MAT_RL][KBOD_MAT_RL] = &KEYMAP_BASE;
+    const char (*keymap)[KBOD_MAT_RL][KBOD_MAT_RL] = &KEYMAP_BASE;
     memset(kbuff, sizeof(kbuff), 0);
     for (int row = 0; row < KBOD_MAT_RL; row++)
     {
@@ -47,7 +47,7 @@ void kbod_matrix_scan()
     }
 }
 
-int main()
+int main(void)
 {
     cli();
 
