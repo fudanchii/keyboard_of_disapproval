@@ -3,11 +3,7 @@
 #include "defs.h"
 #include "bits.h"
 
-#ifdef BOARD_ARDUINO_MICRO
-  #include "arduino_micro/setup.h"
-#elif BOARD_DIGISPARK_PRO
-  #include "digispark_pro/setup.h"
-#endif
+#include "arduino_micro/setup.h"
 
 void kbod_matrix_scan()
 {

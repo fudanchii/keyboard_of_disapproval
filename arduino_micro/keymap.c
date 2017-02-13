@@ -1,5 +1,15 @@
 #include "keymap.h"
 
+const uint8_t KBOD_MAT_R[KBOD_MAT_RL] = { PC6, PD7, PE6, PB4, PB5, PB6, PB7, PD6 };
+const uint8_t KBOD_MAT_C[KBOD_MAT_CL] = { PD0, PD1, PF0, PF1, PF4, PF5, PF6, PF7 };
+
+                                         // PORTC, PORTD, PORTE, PORTB, PORTB, PORTB, PORTB, PORTD
+const uint8_t KBOD_PORTS_R[KBOD_MAT_RL] = { 0x08,  0x0B,  0x0E,  0x05,  0x05,  0x05,  0x05,  0x0B };
+
+                                       // PIND, PIND, PINF, PINF, PINF, PINF, PINF, PINF 
+const uint8_t KBOD_PIN_C[KBOD_MAT_CL] = { 0x09, 0x09, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F };
+
+
 const char KEYMAP_BASE[KBOD_MAT_RL][KBOD_MAT_CL] = {
     { KEY_GRACCT,       KEY_1,         KEY_2,        KEY_3,     KEY_4,         KEY_5,         KEY_6,    KEY_7 }, { KEY_8, KEY_9, KEY_0,      KEY_DASH,   KEY_EQUAL,  KEY_BACKSP, KEY_NONE,   KEY_NONE },
     { KEY_TAB,          KEY_Q,         KEY_W,        KEY_E,     KEY_R,         KEY_T,         KEY_Y,    KEY_U }, { KEY_I, KEY_O, KEY_P,      KEY_LSQBRK, KEY_RSQBRK, KEY_BKSLSH, KEY_NONE,   MOD_SHIFT_RIGHT },

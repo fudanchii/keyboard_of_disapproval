@@ -11,6 +11,11 @@ extern "C" {
 #define KBOD_MAT_RL 8
 #define KBOD_MAT_CL 8
 
+extern const uint8_t KBOD_MAT_C[KBOD_MAT_CL];
+extern const uint8_t KBOD_MAT_R[KBOD_MAT_RL];
+extern const uint8_t KBOD_PORTS_R[KBOD_MAT_RL];
+extern const uint8_t KBOD_PIN_C[KBOD_MAT_CL];
+
 extern const char KEYMAP_BASE[KBOD_MAT_RL][KBOD_MAT_CL];
 extern const char KEYMAP_FN[KBOD_MAT_RL][KBOD_MAT_CL];
 
