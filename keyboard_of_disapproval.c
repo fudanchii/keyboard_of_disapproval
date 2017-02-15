@@ -15,7 +15,7 @@ void kbod_matrix_scan()
     for (int row = 0; row < KBOD_MAT_RL; row++)
     {
         select_row(row);
-        _delay_ms(3);
+        _delay_us(3);
         for (int col = 0; col < KBOD_MAT_CL; col++)
         {
             if (not_active(col)) continue;
