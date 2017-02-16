@@ -9,8 +9,8 @@ void kbod_matrix_scan()
 {
     int kdetected = 0;
     int kro = 0;
-    uint8_t kbuff[KBOD_NKRO+7];
-    const char (*keymap)[KBOD_MAT_RL][KBOD_MAT_RL] = &KEYMAP_BASE;
+    uint8_t kbuff[KBOD_NKRO+8];
+    const char (*keymap)[KBOD_MAT_RL][KBOD_MAT_CL] = &KEYMAP_BASE;
     memset(kbuff, sizeof(kbuff), 0);
     for (int row = 0; row < KBOD_MAT_RL; row++)
     {
@@ -25,10 +25,11 @@ void kbod_matrix_scan()
                 continue;
             }
 
-            kbuff[kdetected] = (row << 4 ) | (col & 0x0F);
-            kdetected++;
+            kbuff[kdetected++] = (row << 4 ) | (col & 0x0F);
+            if (kdetected == KBOD_NKRO + 8) break;
         }
         unselect_row(row);
+        if (kdetected == KBOD_NKRO + 8) break;
     }
 
     for (int k = 0; k < kdetected; k++) {
