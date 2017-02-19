@@ -24,8 +24,6 @@ bool UsingReportProtocol = true;
 
 void kbod_setup()
 {
-    USB_Init();
-
     // Drive high | enable pull up resistor
     bitset4(PORTB, PB4, PB5, PB6, PB7);
     bitset2(PORTC, PC6, PC7);
@@ -42,6 +40,9 @@ void kbod_setup()
     bitset2(DDRC, DDC6, DDC7);
     bitset2(DDRD, DDD6, DDD7);
     bitset1(DDRE, DDE6);
+
+    USB_Init();
+    USB_Device_EnableSOFEvents();
 }
 
 void kbod_cycle()
@@ -68,11 +69,6 @@ void EVENT_USB_Device_Connect()
     blink_led(100);
 }
 
-void EVENT_USB_Device_Disconnect()
-{
-
-}
-
 void EVENT_USB_Device_ConfigurationChanged()
 {
     bool ConfigSuccess = true;
@@ -80,14 +76,6 @@ void EVENT_USB_Device_ConfigurationChanged()
     /* Setup HID Report Endpoints */
     ConfigSuccess &= Endpoint_ConfigureEndpoint(KEYBOARD_IN_EPADDR, EP_TYPE_INTERRUPT, KEYBOARD_EPSIZE, 1);
     ConfigSuccess &= Endpoint_ConfigureEndpoint(KEYBOARD_OUT_EPADDR, EP_TYPE_INTERRUPT, KEYBOARD_EPSIZE, 1);
-
-    /* Turn on Start-of-Frame events for tracking HID report period expiry */
-    USB_Device_EnableSOFEvents();
-}
-
-void EVENT_USB_Device_StartOfFrame(void)
-{
-
 }
 
 void EVENT_USB_Device_ControlRequest(void)
@@ -104,8 +92,7 @@ void EVENT_USB_Device_ControlRequest(void)
 
                 /* Write the report data to the control endpoint */
                 Endpoint_Write_Control_Stream_LE(&cReport, sizeof(cReport));
-                Endpoint_ClearIN();
-                Endpoint_ClearStatusStage();
+                Endpoint_ClearOUT();
             }
 
             break;
@@ -181,6 +168,11 @@ void EVENT_USB_Device_ControlRequest(void)
 
 void idle_USBTask()
 {
+    if (USB_DeviceState != DEVICE_STATE_Configured) {
+        blink_led(50);
+        return;
+    }
+    
     do_scan();
     send_report();
     receive_report();
