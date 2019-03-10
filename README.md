@@ -3,7 +3,7 @@
 First of all, I guess you wouldn't want to build your own keyboard,  
 but anyway, here it is:
 
-<img src="https://f4.fudanchii.net/shx/2017/02/IMG_20170212_224547.jpg"></img>
+<img src="https://f4.fudan.ch/shx/2017/02/IMG_20170212_224547.jpg"></img>
 
 In case anyone curious, it's built on scrap collected over 5 months, 2016 September - 2017 February, the plate is metal frame with 60% layout ([GH60](http://blog.komar.be/introducing-the-gh60-keyboard-project/)) from aliexpress,
 switches is gateron blue bought from Massdrop, the key caps is randomly bought from local gaming store, 
